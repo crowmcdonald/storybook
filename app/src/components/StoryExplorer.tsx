@@ -57,8 +57,9 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
     setMdxSource(null);
   }, [storyType, smallStories, bigStories, allStories]);
 
-  // Split stories into rows of 8
-  const storiesPerRow = 8;
+  // Split stories into rows based on screen size
+  const storiesPerRow = typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 
+                       typeof window !== 'undefined' && window.innerWidth < 1024 ? 4 : 8;
   const rows = [];
   for (let i = 0; i < shuffledStories.length; i += storiesPerRow) {
     rows.push(shuffledStories.slice(i, i + storiesPerRow));
@@ -146,13 +147,13 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
   // Show story explorer with categories
   return (
     <div className="min-h-screen">
-      <div className="p-6 md:p-8">
+      <div className="p-4 md:p-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-800 bg-clip-text text-transparent animate-gradient-x">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-800 bg-clip-text text-transparent animate-gradient-x">
             Story Library
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Choose your reading adventure from our collection of engaging stories
           </p>
         </div>
@@ -160,10 +161,10 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         {/* Story Type Toggle - Only show if both types have stories */}
         {smallStories.length > 0 && bigStories.length > 0 && (
           <div className="flex justify-center mb-8">
-            <div className="flex gap-3 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 p-2 rounded-2xl shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-3 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 p-2 rounded-2xl shadow-lg max-w-full sm:max-w-fit mx-auto">
               <button
                 onClick={() => setStoryType('small')}
-                className={`px-8 py-4 rounded-xl font-semibold transition-all transform ${
+                className={`px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all transform text-sm sm:text-base ${
                   storyType === 'small'
                     ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-xl scale-105'
                     : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:scale-102'
@@ -175,7 +176,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
               </button>
               <button
                 onClick={() => setStoryType('big')}
-                className={`px-8 py-4 rounded-xl font-semibold transition-all transform ${
+                className={`px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all transform text-sm sm:text-base ${
                   storyType === 'big'
                     ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-xl scale-105'
                     : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:scale-102'
@@ -189,8 +190,49 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
           </div>
         )}
 
-        {/* Story Rows */}
-        <div className="space-y-12 max-w-[1600px] mx-auto">
+        {/* Story Grid for Mobile */}
+        <div className="block sm:hidden">
+          <div className="grid grid-cols-2 gap-3 px-2">
+            {shuffledStories.map((story) => {
+              const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
+                ? story.img 
+                : `/story-images/${story.img}`;
+
+              return (
+                <div 
+                  key={story.slug} 
+                  className="story-card cursor-pointer group/card transform transition-all duration-300 active:scale-95"
+                  onClick={() => handleStorySelect(story)}
+                >
+                  {/* Story image */}
+                  <div className="relative overflow-hidden rounded-t-xl h-32">
+                    <Image 
+                      src={normalizedImagePath} 
+                      alt={story.title} 
+                      fill
+                      className="object-cover object-center"
+                      sizes="50vw"
+                      onError={(e) => {
+                        e.currentTarget.src = '/story-images/placeholder.png';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                  
+                  {/* Story info */}
+                  <div className="p-3 bg-gradient-to-b from-background to-muted/20">
+                    <h3 className="font-semibold text-sm line-clamp-2">
+                      {story.title}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Story Rows for Desktop */}
+        <div className="hidden sm:block space-y-12 max-w-[1600px] mx-auto">
           {rows.map((row, rowIndex) => {
             if (row.length === 0) return null;
             
@@ -202,14 +244,14 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                 {/* Scroll buttons */}
                 <button
                   onClick={() => scrollRow(rowRef, 'left')}
-                  className="absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
+                  className="hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110 items-center justify-center"
                   aria-label="Scroll left"
                 >
                   <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button
                   onClick={() => scrollRow(rowRef, 'right')}
-                  className="absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
+                  className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110 items-center justify-center"
                   aria-label="Scroll right"
                 >
                   <ChevronRight className="w-8 h-8" />
@@ -229,7 +271,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                     return (
                       <div 
                         key={story.slug} 
-                        className="flex-none w-48 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
+                        className="flex-none w-40 sm:w-48 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
                         onClick={() => handleStorySelect(story)}
                       >
                         {/* Story image */}

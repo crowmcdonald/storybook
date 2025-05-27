@@ -67,7 +67,7 @@ export interface StoryViewerProps {
 }
 
 const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, onBack }) => {
-  const [fontSize, setFontSize] = useState(110); // Start with slightly larger text
+  const [fontSize, setFontSize] = useState(typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 110); // Smaller default on mobile
   
   const increaseFontSize = () => {
     setFontSize(prev => Math.min(prev + 10, 160)); // Max 160%
@@ -83,32 +83,34 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
     : `/story-images/${imagePath}`;
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-4 md:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Back button */}
         {onBack && (
           <div className="mb-8">
-            <Button onClick={onBack} variant="outline" className="rounded-xl text-white border-white/20 hover:bg-white/10">
-              ← Back to Stories
+            <Button onClick={onBack} variant="outline" className="rounded-xl text-white border-white/20 hover:bg-white/10 text-sm md:text-base">
+              <span className="hidden sm:inline">← Back to Stories</span>
+              <span className="sm:hidden">← Back</span>
             </Button>
           </div>
         )}
         
         {/* Story header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white">
+        <div className="text-center mb-6 md:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 text-white">
             {title}
           </h1>
           
           {imagePath && (
-            <div className="mb-8 flex justify-center">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl" style={{ width: '600px', height: '450px' }}>
+            <div className="mb-4 md:mb-8 flex justify-center">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl w-full max-w-[600px]" style={{ aspectRatio: '4/3' }}>
                 <Image 
                   src={normalizedImagePath} 
                   alt={title} 
                   fill
                   className="object-cover"
-                  sizes="600px"
+                  sizes="(max-width: 640px) 100vw, 600px"
+                  priority
                   onError={(e) => {
                     e.currentTarget.src = '/story-images/placeholder.png';
                   }}
@@ -120,9 +122,9 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
 
         {/* Story content */}
         <article className="max-w-3xl mx-auto">
-          <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 relative border border-gray-800 mt-16">
+          <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 relative border border-gray-800 mt-8 md:mt-16">
             {/* Zoom controls */}
-            <div className="absolute -top-12 right-4 flex items-center gap-3 z-10 bg-gray-900/90 backdrop-blur-sm rounded-full px-3 py-2">
+            <div className="fixed sm:absolute bottom-4 sm:-top-12 right-4 flex items-center gap-3 z-20 bg-gray-900/90 backdrop-blur-sm rounded-full px-3 py-2 shadow-xl">
               <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center">
                 {Math.round(fontSize * 0.9)}%
               </div>
@@ -131,7 +133,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
                   onClick={decreaseFontSize}
                   variant="outline"
                   size="sm"
-                  className="w-8 h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                  className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
                   aria-label="Decrease font size"
                 >
                   <span className="text-lg">−</span>
@@ -140,7 +142,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
                   onClick={increaseFontSize}
                   variant="outline"
                   size="sm"
-                  className="w-8 h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                  className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
                   aria-label="Increase font size"
                 >
                   <span className="text-lg">+</span>

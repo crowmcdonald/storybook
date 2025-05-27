@@ -57,12 +57,12 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
     setMdxSource(null);
   }, [storyType, smallStories, bigStories, allStories]);
 
-  // Split stories into three rows
-  const rows = [
-    shuffledStories.slice(0, Math.ceil(shuffledStories.length / 3)),
-    shuffledStories.slice(Math.ceil(shuffledStories.length / 3), Math.ceil(2 * shuffledStories.length / 3)),
-    shuffledStories.slice(Math.ceil(2 * shuffledStories.length / 3))
-  ];
+  // Split stories into rows of 8
+  const storiesPerRow = 8;
+  const rows = [];
+  for (let i = 0; i < shuffledStories.length; i += storiesPerRow) {
+    rows.push(shuffledStories.slice(i, i + storiesPerRow));
+  }
 
   const handleStorySelect = async (story: StoryData) => {
     startTransition(() => {
@@ -190,7 +190,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         )}
 
         {/* Story Rows */}
-        <div className="space-y-12 max-w-[1400px] mx-auto">
+        <div className="space-y-12 max-w-[1600px] mx-auto">
           {rows.map((row, rowIndex) => {
             if (row.length === 0) return null;
             
@@ -202,17 +202,17 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                 {/* Scroll buttons */}
                 <button
                   onClick={() => scrollRow(rowRef, 'left')}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-lg opacity-0 group-hover/row:opacity-100 transition-opacity duration-300 hover:bg-background/95"
+                  className="absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
                   aria-label="Scroll left"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button
                   onClick={() => scrollRow(rowRef, 'right')}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-lg opacity-0 group-hover/row:opacity-100 transition-opacity duration-300 hover:bg-background/95"
+                  className="absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
                   aria-label="Scroll right"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-8 h-8" />
                 </button>
 
                 {/* Stories Container */}
@@ -229,16 +229,17 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                     return (
                       <div 
                         key={story.slug} 
-                        className="flex-none w-64 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
+                        className="flex-none w-48 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
                         onClick={() => handleStorySelect(story)}
                       >
                         {/* Story image */}
-                        <div className="relative overflow-hidden rounded-t-2xl h-36">
+                        <div className="relative overflow-hidden rounded-t-2xl h-48">
                           <Image 
                             src={normalizedImagePath} 
                             alt={story.title} 
                             fill
-                            className="object-cover group-hover/card:scale-110 transition-transform duration-300"
+                            className="object-cover object-center group-hover/card:scale-110 transition-transform duration-300"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             onError={(e) => {
                               e.currentTarget.src = '/story-images/placeholder.png';
                             }}

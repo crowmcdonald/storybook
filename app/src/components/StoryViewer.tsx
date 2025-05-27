@@ -43,7 +43,7 @@ const mdxComponents = {
     </li>
   ),
   strong: ({ children }: { children: React.ReactNode }) => (
-    <strong className="font-bold text-blue-400">
+    <strong className="font-bold">
       {children}
     </strong>
   ),
@@ -51,6 +51,11 @@ const mdxComponents = {
     <em className="italic text-purple-400">
       {children}
     </em>
+  ),
+  u: ({ children }: { children: React.ReactNode }) => (
+    <span className="font-bold text-blue-500 underline decoration-blue-500 decoration-2 underline-offset-2">
+      {children}
+    </span>
   ),
 };
 
@@ -97,13 +102,13 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
           
           {imagePath && (
             <div className="mb-8 flex justify-center">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl" style={{ width: '600px', height: '450px' }}>
                 <Image 
                   src={normalizedImagePath} 
                   alt={title} 
-                  width={600}
-                  height={450}
+                  fill
                   className="object-cover"
+                  sizes="600px"
                   onError={(e) => {
                     e.currentTarget.src = '/story-images/placeholder.png';
                   }}
@@ -115,32 +120,32 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
 
         {/* Story content */}
         <article className="max-w-3xl mx-auto">
-          <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 relative border border-gray-800">
+          <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 relative border border-gray-800 mt-16">
             {/* Zoom controls */}
-            <div className="absolute top-4 right-4 flex gap-2 z-10">
-              <Button
-                onClick={decreaseFontSize}
-                variant="outline"
-                size="sm"
-                className="w-10 h-10 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
-                aria-label="Decrease font size"
-              >
-                <span className="text-lg">−</span>
-              </Button>
-              <Button
-                onClick={increaseFontSize}
-                variant="outline"
-                size="sm"
-                className="w-10 h-10 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
-                aria-label="Increase font size"
-              >
-                <span className="text-lg">+</span>
-              </Button>
-            </div>
-            
-            {/* Font size indicator */}
-            <div className="absolute top-4 right-24 text-xs text-gray-500">
-              {Math.round(fontSize * 0.9)}%
+            <div className="absolute -top-12 right-4 flex items-center gap-3 z-10 bg-gray-900/90 backdrop-blur-sm rounded-full px-3 py-2">
+              <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center">
+                {Math.round(fontSize * 0.9)}%
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={decreaseFontSize}
+                  variant="outline"
+                  size="sm"
+                  className="w-8 h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                  aria-label="Decrease font size"
+                >
+                  <span className="text-lg">−</span>
+                </Button>
+                <Button
+                  onClick={increaseFontSize}
+                  variant="outline"
+                  size="sm"
+                  className="w-8 h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                  aria-label="Increase font size"
+                >
+                  <span className="text-lg">+</span>
+                </Button>
+              </div>
             </div>
             
             {/* Story content with adjustable font size */}

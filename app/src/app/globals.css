@@ -179,6 +179,12 @@
   text-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
 }
 
+/* Direct u tag styling for sight words */
+.story-text u {
+  @apply font-bold text-blue-400 underline decoration-blue-400 decoration-2 underline-offset-2;
+  text-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+}
+
 /* Modern scroll styling */
 ::-webkit-scrollbar {
   width: 6px;

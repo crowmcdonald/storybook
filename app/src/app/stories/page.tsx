@@ -4,7 +4,6 @@ import { getAllStories, StoryData } from '@/lib/stories';
 import StoryExplorer from '@/components/StoryExplorer';
 import { serialize } from 'next-mdx-remote/serialize';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';
-import rehypeHighlightWords from '@/lib/rehype-highlight-words';
 
 // Cache for words
 let smallWords: string[] = [];
@@ -37,33 +36,16 @@ async function getBigWords(): Promise<string[]> {
 }
 
 // Server Action to serialize MDX with appropriate word highlighting
-async function serializeMdxAction(rawMdxContent: string, storyType?: string): Promise<MDXRemoteSerializeResult | null> {
+async function serializeMdxAction(rawMdxContent: string): Promise<MDXRemoteSerializeResult | null> {
   'use server';
-  
-  let wordsToHighlight: string[] = [];
-  
-  // Determine which words to highlight based on story type
-  if (storyType === 'small') {
-    wordsToHighlight = await getSmallWords();
-  } else if (storyType === 'big') {
-    wordsToHighlight = await getBigWords();
-  } else {
-    // For backward compatibility, use all words
-    const smallWordsList = await getSmallWords();
-    const bigWordsList = await getBigWords();
-    wordsToHighlight = [...smallWordsList, ...bigWordsList];
-  }
   
   try {
     const mdxSource = await serialize(rawMdxContent, {
-      mdxOptions: { 
-        rehypePlugins: [[rehypeHighlightWords, { wordsToHighlight }]],
-      },
       parseFrontmatter: false,
     });
     return mdxSource;
   } catch (error) {
-    console.error("Error serializing MDX content with highlighting:", error);
+    console.error("Error serializing MDX content:", error);
     return null;
   }
 }

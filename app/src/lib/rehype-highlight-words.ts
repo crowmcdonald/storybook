@@ -38,11 +38,9 @@ export default function rehypeHighlightWords(options: RehypeHighlightWordsOption
           if (match.index > lastIndex) {
             newNodes.push({ type: 'text', value: textValue.substring(lastIndex, match.index) });
           }
-          // Add the highlighted word, wrapped in <strong> and <u>
+          // Add the highlighted word, wrapped only in <u>
           newNodes.push(
-            h('strong', [h('u', match[0])])
-            // Alternatively, for custom styling with classes:
-            // h('span', { className: 'highlighted-word' }, match[0])
+            h('u', match[0])
           );
           lastIndex = regex.lastIndex;
         }

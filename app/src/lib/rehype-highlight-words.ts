@@ -1,6 +1,6 @@
 import { visit, SKIP } from 'unist-util-visit';
 import { h } from 'hastscript';
-import { Element, Text } from 'hast';
+// Types are used inline
 
 interface RehypeHighlightWordsOptions {
   wordsToHighlight: string[];
@@ -11,7 +11,7 @@ interface HastNode {
   type: string;
   value?: string;
   tagName?: string;
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   children?: HastNode[];
 }
 

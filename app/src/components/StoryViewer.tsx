@@ -7,47 +7,47 @@ import { Button } from '@/components/ui/button';
 
 // Custom components for better typography
 const mdxComponents = {
-  p: ({ children }: any) => (
+  p: ({ children }: { children: React.ReactNode }) => (
     <p className="mb-6 text-gray-100 leading-[1.9] tracking-wide">
       {children}
     </p>
   ),
-  h1: ({ children }: any) => (
+  h1: ({ children }: { children: React.ReactNode }) => (
     <h1 className="text-3xl font-bold mb-6 text-white">
       {children}
     </h1>
   ),
-  h2: ({ children }: any) => (
+  h2: ({ children }: { children: React.ReactNode }) => (
     <h2 className="text-2xl font-bold mb-4 mt-8 text-white">
       {children}
     </h2>
   ),
-  h3: ({ children }: any) => (
+  h3: ({ children }: { children: React.ReactNode }) => (
     <h3 className="text-xl font-bold mb-3 mt-6 text-white">
       {children}
     </h3>
   ),
-  ul: ({ children }: any) => (
+  ul: ({ children }: { children: React.ReactNode }) => (
     <ul className="mb-6 space-y-2 text-gray-100">
       {children}
     </ul>
   ),
-  ol: ({ children }: any) => (
+  ol: ({ children }: { children: React.ReactNode }) => (
     <ol className="mb-6 space-y-2 text-gray-100">
       {children}
     </ol>
   ),
-  li: ({ children }: any) => (
+  li: ({ children }: { children: React.ReactNode }) => (
     <li className="ml-6 leading-relaxed">
       {children}
     </li>
   ),
-  strong: ({ children }: any) => (
+  strong: ({ children }: { children: React.ReactNode }) => (
     <strong className="font-bold text-blue-400">
       {children}
     </strong>
   ),
-  em: ({ children }: any) => (
+  em: ({ children }: { children: React.ReactNode }) => (
     <em className="italic text-purple-400">
       {children}
     </em>

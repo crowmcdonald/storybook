@@ -10,7 +10,7 @@ export interface StoryFrontMatter {
   title: string;
   img: string;
   wordType?: string;
-  [key: string]: any; // Allow other properties
+  [key: string]: string | undefined; // Allow other properties
 }
 
 export interface StoryData extends StoryFrontMatter {

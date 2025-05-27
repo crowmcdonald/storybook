@@ -10,7 +10,6 @@ const navItems = [
   { href: "/flashcards", label: "Flashcards", icon: "/icons/flashcards.svg" },
   { href: "/stories", label: "Stories", icon: "/icons/stories.svg" },
   { href: "/sight-words", label: "Sight Words", icon: "/icons/book.svg" },
-  { href: "/upload", label: "Upload Story", icon: "/icons/upload.svg" },
 ];
 
 interface SidebarProps {

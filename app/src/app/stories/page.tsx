@@ -88,7 +88,7 @@ async function getStoriesFromDir(dir: string): Promise<StoryData[]> {
         const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
         if (frontmatterMatch) {
           const frontmatterText = frontmatterMatch[1];
-          const title = frontmatterText.match(/title:\s*"([^"]+)"/)?.[1] || 'Untitled';
+          const title = frontmatterText.match(/title:\s*["']?([^"'\n]+)["']?/)?.[1]?.trim() || 'Untitled';
           const img = frontmatterText.match(/img:\s*"([^"]+)"/)?.[1] || '';
           const wordType = frontmatterText.match(/wordType:\s*"([^"]+)"/)?.[1] || dir;
           

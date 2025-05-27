@@ -160,30 +160,30 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         {/* Story Type Toggle - Only show if both types have stories */}
         {smallStories.length > 0 && bigStories.length > 0 && (
           <div className="flex justify-center mb-8">
-            <div className="flex gap-2 bg-muted/50 p-1 rounded-xl">
+            <div className="flex gap-3 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 p-2 rounded-2xl shadow-lg">
               <button
                 onClick={() => setStoryType('small')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-8 py-4 rounded-xl font-semibold transition-all transform ${
                   storyType === 'small'
-                    ? 'bg-white dark:bg-gray-900 shadow-sm text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-xl scale-105'
+                    : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:scale-102'
                 }`}
               >
-                <Blocks className="w-4 h-4 inline-block mr-2" />
+                <Blocks className="w-5 h-5 inline-block mr-2" />
                 Small Word Stories
-                <span className="ml-2 text-sm opacity-70">({smallStories.length})</span>
+                <span className="ml-2 text-sm opacity-90">({smallStories.length})</span>
               </button>
               <button
                 onClick={() => setStoryType('big')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-8 py-4 rounded-xl font-semibold transition-all transform ${
                   storyType === 'big'
-                    ? 'bg-white dark:bg-gray-900 shadow-sm text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-xl scale-105'
+                    : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:scale-102'
                 }`}
               >
-                <Sparkles className="w-4 h-4 inline-block mr-2" />
+                <Sparkles className="w-5 h-5 inline-block mr-2" />
                 Big Word Stories
-                <span className="ml-2 text-sm opacity-70">({bigStories.length})</span>
+                <span className="ml-2 text-sm opacity-90">({bigStories.length})</span>
               </button>
             </div>
           </div>
@@ -251,10 +251,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                           <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover/card:text-primary transition-colors">
                             {story.title}
                           </h3>
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-muted-foreground">
-                              {story.wordType === 'small' ? 'Small Words' : story.wordType === 'big' ? 'Big Words' : 'Mixed Words'}
-                            </span>
+                          <div className="flex items-center justify-end">
                             <span className="text-sm font-medium text-primary opacity-0 group-hover/card:opacity-100 transition-opacity">
                               Read →
                             </span>

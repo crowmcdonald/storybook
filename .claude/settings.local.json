@@ -6,7 +6,12 @@
       "Bash(npm run dev:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(for i in 008 011 012 015 020 025)",
+      "Bash(do echo \"=== Story $i.mdx ===\")",
+      "Bash(grep:*)",
+      "Bash(done)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

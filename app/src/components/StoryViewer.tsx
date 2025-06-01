@@ -124,8 +124,8 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
         <article className="max-w-3xl mx-auto">
           <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 relative border border-gray-800 mt-8 md:mt-16">
             {/* Zoom controls */}
-            <div className="fixed sm:absolute bottom-4 sm:-top-12 right-4 flex items-center gap-3 z-10 bg-gray-900/95 rounded-full px-3 py-2 shadow-xl border border-gray-700/50">
-              <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center">
+            <div className="fixed sm:absolute bottom-4 sm:-top-12 right-4 flex items-center gap-2 z-10">
+              <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center bg-gray-900/90 rounded-full px-2 py-1">
                 {Math.round(fontSize * 0.9)}%
               </div>
               <div className="flex gap-2">

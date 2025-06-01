@@ -6,7 +6,7 @@ import StoryViewer from '@/components/StoryViewer';
 import { Button } from '@/components/ui/button';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Blocks, Sparkles } from 'lucide-react';
+import { Blocks, Sparkles } from 'lucide-react';
 
 interface StoryExplorerProps {
   smallStories?: StoryData[];
@@ -28,11 +28,6 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
   const [isLoadingStory, setIsLoadingStory] = useState(false);
   const [sortedStories, setSortedStories] = useState<StoryData[]>([]);
   const [storyType, setStoryType] = useState<StoryType>('small');
-  
-  // Refs for each row
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
-  const row3Ref = useRef<HTMLDivElement>(null);
 
   // Update stories when type changes
   useEffect(() => {
@@ -52,12 +47,6 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
     setMdxSource(null);
   }, [storyType, smallStories, bigStories, allStories]);
 
-  // Split stories into rows - 2 on mobile, 4 on desktop
-  const storiesPerRow = typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 4;
-  const rows = [];
-  for (let i = 0; i < sortedStories.length; i += storiesPerRow) {
-    rows.push(sortedStories.slice(i, i + storiesPerRow));
-  }
 
   const handleStorySelect = async (story: StoryData) => {
     startTransition(() => {
@@ -91,15 +80,6 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
     });
   };
 
-  const scrollRow = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
-    if (ref.current) {
-      const scrollAmount = 300;
-      ref.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   // Show story viewer if a story is selected
   if (selectedStory) {
@@ -225,82 +205,50 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
           </div>
         </div>
 
-        {/* Story Rows for Desktop */}
-        <div className="hidden sm:block space-y-12 max-w-[1600px] mx-auto">
-          {rows.map((row, rowIndex) => {
-            if (row.length === 0) return null;
-            
-            const rowRef = rowIndex === 0 ? row1Ref : rowIndex === 1 ? row2Ref : row3Ref;
-            
-            return (
-              <div key={rowIndex} className="relative group/row">
-                
-                {/* Scroll buttons */}
-                <button
-                  onClick={() => scrollRow(rowRef, 'left')}
-                  className="hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110 items-center justify-center"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="w-8 h-8" />
-                </button>
-                <button
-                  onClick={() => scrollRow(rowRef, 'right')}
-                  className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-background/95 backdrop-blur-sm rounded-full p-4 shadow-xl opacity-0 group-hover/row:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110 items-center justify-center"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="w-8 h-8" />
-                </button>
+        {/* Story Grid for Desktop */}
+        <div className="hidden sm:block max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {sortedStories.map((story) => {
+              const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
+                ? story.img 
+                : `/story-images/${story.img}`;
 
-                {/* Stories Container */}
-                <div
-                  ref={rowRef}
-                  className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              return (
+                <div 
+                  key={story.slug} 
+                  className="story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-2xl"
+                  onClick={() => handleStorySelect(story)}
                 >
-                  {row.map((story) => {
-                    const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
-                      ? story.img 
-                      : `/story-images/${story.img}`;
-
-                    return (
-                      <div 
-                        key={story.slug} 
-                        className="flex-none w-64 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
-                        onClick={() => handleStorySelect(story)}
-                      >
-                        {/* Story image */}
-                        <div className="relative overflow-hidden rounded-t-2xl h-48">
-                          <Image 
-                            src={normalizedImagePath} 
-                            alt={story.title} 
-                            fill
-                            className="object-cover object-center group-hover/card:scale-110 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            onError={(e) => {
-                              e.currentTarget.src = '/story-images/placeholder.png';
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        </div>
-                        
-                        {/* Story info */}
-                        <div className="p-4 bg-gradient-to-b from-background to-muted/20">
-                          <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover/card:text-primary transition-colors">
-                            {story.title}
-                          </h3>
-                          <div className="flex items-center justify-end">
-                            <span className="text-sm font-medium text-primary opacity-0 group-hover/card:opacity-100 transition-opacity">
-                              Read →
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {/* Story image */}
+                  <div className="relative overflow-hidden rounded-t-2xl aspect-[4/3]">
+                    <Image 
+                      src={normalizedImagePath} 
+                      alt={story.title} 
+                      fill
+                      className="object-cover object-center group-hover/card:scale-110 transition-transform duration-300"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      onError={(e) => {
+                        e.currentTarget.src = '/story-images/placeholder.png';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                  
+                  {/* Story info */}
+                  <div className="p-4 bg-gradient-to-b from-background to-muted/20 rounded-b-2xl">
+                    <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover/card:text-primary transition-colors">
+                      {story.title}
+                    </h3>
+                    <div className="flex items-center justify-end">
+                      <span className="text-sm font-medium text-primary opacity-0 group-hover/card:opacity-100 transition-opacity">
+                        Read →
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Empty state */}

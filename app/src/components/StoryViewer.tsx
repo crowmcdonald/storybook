@@ -120,35 +120,34 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
           )}
         </div>
 
-        {/* Zoom controls */}
-        <div className="fixed bottom-4 right-4 sm:absolute sm:top-0 sm:right-0 flex items-center gap-2 z-10">
-          <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center bg-gray-900/90 rounded-full px-2 py-1">
-            {Math.round(fontSize * 0.9)}%
-          </div>
-          <div className="flex gap-2">
-            <Button
-              onClick={decreaseFontSize}
-              variant="outline"
-              size="sm"
-              className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
-              aria-label="Decrease font size"
-            >
-              <span className="text-lg">−</span>
-            </Button>
-            <Button
-              onClick={increaseFontSize}
-              variant="outline"
-              size="sm"
-              className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
-              aria-label="Increase font size"
-            >
-              <span className="text-lg">+</span>
-            </Button>
-          </div>
-        </div>
-
         {/* Story content */}
-        <article className="max-w-3xl mx-auto">
+        <article className="max-w-3xl mx-auto relative">
+          {/* Zoom controls */}
+          <div className="fixed bottom-4 right-4 sm:absolute sm:-top-12 sm:right-0 flex items-center gap-2 z-10">
+            <div className="text-xs text-gray-400 font-medium min-w-[40px] text-center bg-gray-900/90 rounded-full px-2 py-1">
+              {Math.round(fontSize * 0.9)}%
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={decreaseFontSize}
+                variant="outline"
+                size="sm"
+                className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                aria-label="Decrease font size"
+              >
+                <span className="text-lg">−</span>
+              </Button>
+              <Button
+                onClick={increaseFontSize}
+                variant="outline"
+                size="sm"
+                className="w-10 h-10 sm:w-8 sm:h-8 p-0 rounded-full bg-gray-800 border-gray-700 hover:bg-gray-700 text-gray-300"
+                aria-label="Increase font size"
+              >
+                <span className="text-lg">+</span>
+              </Button>
+            </div>
+          </div>
           <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 relative border border-gray-800 mt-8 md:mt-16">
             {/* Story content with adjustable font size */}
             <div 

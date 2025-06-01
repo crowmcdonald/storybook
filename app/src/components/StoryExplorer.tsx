@@ -17,21 +17,16 @@ interface StoryExplorerProps {
 
 type StoryType = 'small' | 'big';
 
-// Fisher-Yates shuffle
-function shuffleArray<T>(array: T[]): T[] {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
+// Sort stories alphabetically by title
+function sortStoriesAlphabetically(stories: StoryData[]): StoryData[] {
+  return [...stories].sort((a, b) => a.title.localeCompare(b.title));
 }
 
 export default function StoryExplorer({ smallStories = [], bigStories = [], allStories = [], serializeMdxAction }: StoryExplorerProps) {
   const [selectedStory, setSelectedStory] = useState<StoryData | null>(null);
   const [mdxSource, setMdxSource] = useState<MDXRemoteSerializeResult | null>(null);
   const [isLoadingStory, setIsLoadingStory] = useState(false);
-  const [shuffledStories, setShuffledStories] = useState<StoryData[]>([]);
+  const [sortedStories, setSortedStories] = useState<StoryData[]>([]);
   const [storyType, setStoryType] = useState<StoryType>('small');
   
   // Refs for each row
@@ -52,17 +47,16 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
       stories = allStories;
     }
     
-    setShuffledStories(shuffleArray(stories));
+    setSortedStories(sortStoriesAlphabetically(stories));
     setSelectedStory(null);
     setMdxSource(null);
   }, [storyType, smallStories, bigStories, allStories]);
 
-  // Split stories into rows based on screen size
-  const storiesPerRow = typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 
-                       typeof window !== 'undefined' && window.innerWidth < 1024 ? 4 : 8;
+  // Split stories into rows - 2 on mobile, 4 on desktop
+  const storiesPerRow = typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 4;
   const rows = [];
-  for (let i = 0; i < shuffledStories.length; i += storiesPerRow) {
-    rows.push(shuffledStories.slice(i, i + storiesPerRow));
+  for (let i = 0; i < sortedStories.length; i += storiesPerRow) {
+    rows.push(sortedStories.slice(i, i + storiesPerRow));
   }
 
   const handleStorySelect = async (story: StoryData) => {
@@ -193,7 +187,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         {/* Story Grid for Mobile */}
         <div className="block sm:hidden">
           <div className="grid grid-cols-2 gap-3 px-2">
-            {shuffledStories.map((story) => {
+            {sortedStories.map((story) => {
               const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
                 ? story.img 
                 : `/story-images/${story.img}`;
@@ -271,7 +265,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
                     return (
                       <div 
                         key={story.slug} 
-                        className="flex-none w-40 sm:w-48 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
+                        className="flex-none w-64 story-card cursor-pointer group/card transform transition-all duration-300 hover:scale-105 hover:z-10"
                         onClick={() => handleStorySelect(story)}
                       >
                         {/* Story image */}
@@ -310,7 +304,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         </div>
 
         {/* Empty state */}
-        {shuffledStories.length === 0 && (
+        {sortedStories.length === 0 && (
           <div className="text-center py-20">
             <h2 className="text-2xl font-semibold mb-4 text-muted-foreground">
               No {storyType} stories available yet

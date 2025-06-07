@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import FlashcardSession from '@/components/FlashcardSession';
-import fs from 'fs';
-import path from 'path';
 import { Button } from '@/components/ui/button';
 
 // This function would typically be in a lib/data-fetching file
@@ -32,7 +30,8 @@ async function getWordsForBlend(slug: string): Promise<string[]> {
 }
 
 
-export default function ConsonantBlendFlashcardPage({ params }: { params: { slug: string } }) {
+export default function ConsonantBlendFlashcardPage() {
+  const params = useParams<{ slug: string }>();
   const [words, setWords] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();

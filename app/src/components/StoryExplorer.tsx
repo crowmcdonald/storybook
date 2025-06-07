@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, startTransition, useRef, useEffect } from 'react';
+import React, { useState, startTransition, useRef, useEffect, useMemo } from 'react';
 import { StoryData } from '@/lib/stories';
 import StoryViewer from '@/components/StoryViewer';
 import { Button } from '@/components/ui/button';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Image from 'next/image';
 import { Blocks, Sparkles } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface StoryExplorerProps {
   smallStories?: StoryData[];
@@ -28,6 +29,10 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
   const [isLoadingStory, setIsLoadingStory] = useState(false);
   const [sortedStories, setSortedStories] = useState<StoryData[]>([]);
   const [storyType, setStoryType] = useState<StoryType>('small');
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const isConsonantBlendsPage = pathname.includes('/consonant-blends');
 
   // Update stories when type changes
   useEffect(() => {
@@ -49,27 +54,31 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
 
 
   const handleStorySelect = async (story: StoryData) => {
-    startTransition(() => {
-      setSelectedStory(story);
-      setIsLoadingStory(true);
-    });
-
-    try {
-      const serializedContent = await serializeMdxAction(story.content, story.wordType || storyType);
-      if (serializedContent) {
-        startTransition(() => {
-          setMdxSource(serializedContent);
-          setIsLoadingStory(false);
-        });
-      } else {
-        throw new Error("Failed to serialize story content");
-      }
-    } catch (error) {
-      console.error("Error processing story:", error);
+    if (isConsonantBlendsPage) {
+      router.push(`/consonant-blends/${story.slug}`);
+    } else {
       startTransition(() => {
-        setIsLoadingStory(false);
-        setSelectedStory(null);
+        setSelectedStory(story);
+        setIsLoadingStory(true);
       });
+
+      try {
+        const serializedContent = await serializeMdxAction(story.content, story.wordType || storyType);
+        if (serializedContent) {
+          startTransition(() => {
+            setMdxSource(serializedContent);
+            setIsLoadingStory(false);
+          });
+        } else {
+          throw new Error("Failed to serialize story content");
+        }
+      } catch (error) {
+        console.error("Error processing story:", error);
+        startTransition(() => {
+          setIsLoadingStory(false);
+          setSelectedStory(null);
+        });
+      }
     }
   };
 

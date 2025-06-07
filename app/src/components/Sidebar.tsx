@@ -9,6 +9,7 @@ const navItems = [
   { href: "/", label: "Home", icon: "/icons/home.svg" },
   { href: "/flashcards", label: "Flashcards", icon: "/icons/flashcards.svg" },
   { href: "/stories", label: "Stories", icon: "/icons/stories.svg" },
+  { href: "/consonant-blends", label: "Consonant Blends", icon: "/icons/puzzle.svg" },
   { href: "/sight-words", label: "Sight Words", icon: "/icons/book.svg" },
 ];
 

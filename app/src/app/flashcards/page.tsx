@@ -9,6 +9,16 @@ const WORD_COUNT_OPTIONS = [10, 25, 50, 100];
 
 type WordType = 'small' | 'big';
 
+// Fisher-Yates shuffle function
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 export default function FlashcardsPage() {
   const [smallWords, setSmallWords] = useState<string[]>([]);
   const [bigWords, setBigWords] = useState<string[]>([]);
@@ -23,12 +33,12 @@ export default function FlashcardsPage() {
       const smallResponse = await fetch('/content/small-words.txt');
       if (smallResponse.ok) {
         const text = await smallResponse.text();
-        setSmallWords(text.split('\\n').map(word => word.trim()).filter(word => word.length > 0));
+        setSmallWords(text.split('\n').map(word => word.trim()).filter(word => word.length > 0));
       }
       const bigResponse = await fetch('/content/big-words.txt');
       if (bigResponse.ok) {
         const text = await bigResponse.text();
-        setBigWords(text.split('\\n').map(word => word.trim()).filter(word => word.length > 0));
+        setBigWords(text.split('\n').map(word => word.trim()).filter(word => word.length > 0));
       }
     } catch (error) {
       console.error("Failed to load words:", error);
@@ -43,7 +53,8 @@ export default function FlashcardsPage() {
   const startSession = (count: number) => {
     const sourceWords = wordType === 'small' ? smallWords : bigWords;
     if (sourceWords.length > 0) {
-      setSessionWords(sourceWords.slice(0, count));
+      const shuffledWords = shuffleArray(sourceWords);
+      setSessionWords(shuffledWords.slice(0, count));
       setSelectedWordCount(count);
     }
   };

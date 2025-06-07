@@ -39,8 +39,9 @@ An interactive reading education app built with Next.js, featuring flashcards, i
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
+- Python 3.x (for content generation scripts)
 
 ### Installation
 
@@ -61,7 +62,7 @@ npm install
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🏗️ Tech Stack
 
@@ -77,77 +78,54 @@ npm run dev
 
 ```
 storybook/
-├── app/                          # Next.js application
-│   ├── src/
-│   │   ├── app/                  # App Router pages
-│   │   │   ├── flashcards/       # Flashcard practice
-│   │   │   ├── stories/          # Story browser & viewer
-│   │   │   ├── sight-words/      # Sight word management
-│   │   │   └── api/              # API endpoints
-│   │   ├── components/           # React components
-│   │   └── lib/                  # Utilities & helpers
-│   └── public/
-│       ├── content/              # Stories and word lists
-│       └── story-images/         # Hero images for stories
-└── [Python utilities]            # Image generation scripts
+├── app/              # Next.js application
+│   ├── public/       # Static assets
+│   └── src/          # Source code
+├── python_scripts/   # Python utility scripts
+└── package.json
 ```
 
-## 🎯 Key Features Explained
+## Content Generation
 
-### Word Highlighting System
-Stories automatically highlight vocabulary words that appear in the sight word lists. This reinforcement helps learners recognize and remember important words in context.
+This project includes several Python scripts in the `python_scripts` directory to help with content creation.
 
-### Flashcard Algorithm
-- Uses Fisher-Yates shuffle for truly random word selection
-- "Mark for Revisit" intelligently reinserts words for spaced repetition
-- Session state management for smooth learning flow
+### `generate_story_images.py`
+Creates `story_image_prompts.json` with prompts for AI image generation.
 
-### Story Management
-- MDX format allows rich content with metadata
-- Server-side rendering for optimal performance
-- Dynamic content loading based on word categories
+### `create_themed_placeholders.py`
+Generates themed placeholder images for stories using the Pillow library. You may need to install it: `pip install Pillow`.
+
+### `list_stories.py`
+A utility script to list all story titles and their image filenames.
 
 ## 🛠️ Development
 
 ### Adding New Stories
-1. Create an MDX file in `app/public/content/stories/[small|big]/`
-2. Include frontmatter with title, wordType, and image reference
-3. Add corresponding image to `app/public/story-images/`
+See `HOW_TO_ADD_STORIES.md` for a detailed guide.
 
 ### Customizing Word Lists
-- Edit `app/public/content/small-words.txt` for basic words
-- Edit `app/public/content/big-words.txt` for complex vocabulary
+- Edit `app/public/content/small-words.txt`
+- Edit `app/public/content/big-words.txt`
 
 ### Running Tests
 ```bash
-npm run test        # Run test suite
-npm run lint        # Check code quality
-npm run type-check  # TypeScript validation
+npm run test
+npm run lint
+npm run type-check
 ```
-
-## 📱 Screenshots
-
-[Add screenshots of your app here]
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Contributions are welcome! Please submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Built with Next.js and the amazing React ecosystem
-- Inspired by modern educational technology
-- Special thanks to all contributors
+- Built with Next.js and the React ecosystem.
+- Inspired by modern educational technology.
 
 ---
 

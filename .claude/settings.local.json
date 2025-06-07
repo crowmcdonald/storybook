@@ -11,8 +11,10 @@
       "Bash(do echo \"=== Story $i.mdx ===\")",
       "Bash(grep:*)",
       "Bash(done)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "mcp__ide__executeCode"
     ],
     "deny": []
-  }
+  },
+  "enableAllProjectMcpServers": false
 }

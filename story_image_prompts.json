@@ -298,5 +298,41 @@
     "title": "The Puppet Show",
     "prompt": "Children watching puppet show, colorful puppets on stage, excited audience faces, puppet theater setup, entertaining scene",
     "filename": "050.jpg"
+  },
+  {
+    "id": "052",
+    "title": "Batman and His Car",
+    "prompt": "Batman in a sleek, black, high-tech car, driving through a dark city street at night, headlights on, dramatic comic book style",
+    "filename": "052.jpg"
+  },
+  {
+    "id": "053",
+    "title": "Spider-Man at School",
+    "prompt": "Spider-Man in a friendly pose in a classroom, talking to a group of excited children, school setting, bright and cheerful, comic book style",
+    "filename": "053.jpg"
+  },
+  {
+    "id": "055",
+    "title": "Batman and the Riddle",
+    "prompt": "Batman standing in front of a large clock tower at night, looking at a riddle on a piece of paper, mysterious and thoughtful, comic book style",
+    "filename": "055.jpg"
+  },
+  {
+    "id": "056",
+    "title": "Spider-Man and the Bridge",
+    "prompt": "Spider-Man using his webs to hold up a cracked bridge over water, with cars stopped on it, action-packed and heroic, comic book style",
+    "filename": "056.jpg"
+  },
+  {
+    "id": "058",
+    "title": "Batman Helps the Park",
+    "prompt": "Batman overseeing a group of people cleaning up a park, with swings and slides in the background, a sense of community and order, comic book style",
+    "filename": "058.jpg"
+  },
+  {
+    "id": "060",
+    "title": "Heroes Save the Day",
+    "prompt": "Spider-Man, Superman, and Batman standing together on a rooftop overlooking a city at night, looking heroic and ready for action, comic book style",
+    "filename": "060.jpg"
   }
 ]

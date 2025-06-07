@@ -48,6 +48,11 @@ color_themes = {
         "bg": (96, 125, 139),  # Learning blue-grey
         "accent": (255, 193, 7),  # Yellow
         "text": (255, 255, 255)
+    },
+    "superhero": {
+        "bg": (239, 83, 80),  # Superhero red
+        "accent": (66, 133, 244),  # Superhero blue
+        "text": (255, 255, 255)
     }
 }
 
@@ -60,6 +65,8 @@ def get_theme(story_id):
         return "lego"
     elif 21 <= id_num <= 30:
         return "pokemon"
+    elif id_num in [52, 53, 55, 56, 58, 60]:
+        return "superhero"
     elif id_num in [31, 37, 38, 42, 49]:  # Outdoor activities
         return "outdoor"
     elif id_num in [32, 33, 44, 45, 48, 50]:  # Creative activities

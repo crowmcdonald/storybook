@@ -300,6 +300,12 @@
     "filename": "050.jpg"
   },
   {
+    "id": "051",
+    "title": "Superman Saves the Bus",
+    "prompt": "Superman flying and lifting a yellow school bus off a broken bridge, heroic and dramatic, comic book style",
+    "filename": "051.jpg"
+  },
+  {
     "id": "052",
     "title": "Batman and His Car",
     "prompt": "Batman in a sleek, black, high-tech car, driving through a dark city street at night, headlights on, dramatic comic book style",
@@ -310,6 +316,12 @@
     "title": "Spider-Man at School",
     "prompt": "Spider-Man in a friendly pose in a classroom, talking to a group of excited children, school setting, bright and cheerful, comic book style",
     "filename": "053.jpg"
+  },
+  {
+    "id": "054",
+    "title": "Superman Helps the Farm",
+    "prompt": "Superman helping a farmer rebuild a barn on a sunny day, farm animals in the background, friendly and helpful, comic book style",
+    "filename": "054.jpg"
   },
   {
     "id": "055",
@@ -324,10 +336,22 @@
     "filename": "056.jpg"
   },
   {
+    "id": "057",
+    "title": "Superman and the Storm",
+    "prompt": "Superman flying in a stormy sky, clearing fallen trees from a city road, powerful and determined, comic book style",
+    "filename": "057.jpg"
+  },
+  {
     "id": "058",
     "title": "Batman Helps the Park",
     "prompt": "Batman overseeing a group of people cleaning up a park, with swings and slides in the background, a sense of community and order, comic book style",
     "filename": "058.jpg"
+  },
+  {
+    "id": "059",
+    "title": "Spider-Man Team Up",
+    "prompt": "Spider-Man, Superman, and Batman working together to stop bad guys in a city, dynamic action scene, comic book style",
+    "filename": "059.jpg"
   },
   {
     "id": "060",

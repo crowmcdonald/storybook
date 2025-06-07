@@ -65,7 +65,7 @@ def get_theme(story_id):
         return "lego"
     elif 21 <= id_num <= 30:
         return "pokemon"
-    elif id_num in [52, 53, 55, 56, 58, 60]:
+    elif id_num in [51, 52, 53, 54, 55, 56, 57, 58, 59, 60]:
         return "superhero"
     elif id_num in [31, 37, 38, 42, 49]:  # Outdoor activities
         return "outdoor"

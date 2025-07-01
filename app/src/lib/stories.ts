@@ -51,7 +51,8 @@ export async function getStoryData(slug: string): Promise<StoryData | null> {
 
     return {
       slug,
-      ...(data as StoryFrontMatter), // Type assertion for front-matter
+      ...(data as StoryFrontMatter),
+      img: `/story-images/${data.img}`, // Prepend /story-images/
       content, // Raw MDX content
     };
   } catch (error) {

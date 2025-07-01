@@ -177,9 +177,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         <div className="block sm:hidden">
           <div className="grid grid-cols-2 gap-3 px-2">
             {sortedStories.map((story) => {
-              const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
-                ? story.img 
-                : `/story-images/${story.img}`;
+              const normalizedImagePath = story.img;
 
               return (
                 <div 
@@ -218,9 +216,7 @@ export default function StoryExplorer({ smallStories = [], bigStories = [], allS
         <div className="hidden sm:block max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {sortedStories.map((story) => {
-              const normalizedImagePath = story.img.startsWith('/') || story.img.startsWith('http') 
-                ? story.img 
-                : `/story-images/${story.img}`;
+              const normalizedImagePath = story.img;
 
               return (
                 <div 

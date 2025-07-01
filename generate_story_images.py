@@ -330,7 +330,7 @@ print("Each prompt captures the main theme and creates a visually engaging scene
 
 # Also create a script to generate placeholder images with the right names
 print("\nCreating placeholder images...")
-import subprocess # Bandit B404: The use of subprocess is safe here as the filepath is not user-controlled.
+import subprocess # nosec B404
 
 for story in story_images:
     filename = story['filename']

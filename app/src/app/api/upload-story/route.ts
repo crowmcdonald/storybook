@@ -40,6 +40,10 @@ export async function POST(request: NextRequest) {
       throw new Error('Invalid image extension');
     }
     const imageName = `${storyId}.${imageExtension}`;
+    // Sanitize imageName to prevent path traversal
+    if (!/^[a-zA-Z0-9.]+$/.test(imageName)) {
+      throw new Error('Invalid image name');
+    }
     const imagePath = path.join(process.cwd(), 'public/story-images', imageName);
     
     await writeFile(imagePath, imageBuffer);

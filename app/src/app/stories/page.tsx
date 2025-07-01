@@ -68,12 +68,13 @@ async function getStoriesFromDir(dir: string): Promise<StoryData[]> {
     
     for (const file of files) {
       // Sanitize file to prevent path traversal
-      if (file.includes('..') || file.includes('/')) {
-        console.warn(`Skipping potentially malicious file: ${file}`);
+      const sanitizedFile = path.basename(file);
+      if (sanitizedFile.includes('..') || sanitizedFile.includes('/')) {
+        console.warn(`Skipping potentially malicious file: ${sanitizedFile}`);
         continue;
       }
-      if (file.endsWith('.mdx')) {
-        const filePath = path.join(storiesPath, file);
+      if (sanitizedFile.endsWith('.mdx')) {
+        const filePath = path.join(storiesPath, sanitizedFile);
         const content = fs.readFileSync(filePath, 'utf8');
         
         // Parse frontmatter manually (simple approach)

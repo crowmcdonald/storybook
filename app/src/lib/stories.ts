@@ -33,11 +33,12 @@ export function getAllStorySlugs() {
 
 export async function getStoryData(slug: string): Promise<StoryData | null> {
   // Sanitize slug to prevent path traversal
-  if (slug.includes('..') || slug.includes('/')) {
-    console.error(`Attempted path traversal with slug: ${slug}`);
+  const sanitizedSlug = path.basename(slug, '.mdx');
+  if (sanitizedSlug.includes('..') || sanitizedSlug.includes('/')) {
+    console.error(`Attempted path traversal with slug: ${sanitizedSlug}`);
     return null;
   }
-  const fullPath = path.join(storiesDirectory, `${slug}.mdx`);
+  const fullPath = path.join(storiesDirectory, `${sanitizedSlug}.mdx`);
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);

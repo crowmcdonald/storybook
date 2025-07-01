@@ -1,132 +1,71 @@
-# 📚 Storybook - Modern Reading Education Platform
+# Storybook Project
 
-An interactive reading education app built with Next.js, featuring flashcards, immersive stories, and sight word practice for learners of all ages.
+This repository contains a Next.js application for displaying interactive stories or content, complemented by Python scripts for automated content and image generation.
 
-![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=flat-square&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+## Features
 
-## ✨ Features
+-   **Dynamic Content Display**: Utilizes MDX for rich, interactive content.
+-   **Automated Image Generation**: Python scripts generate story-specific images.
+-   **Theming Support**: Configurable themes for different visual experiences.
 
-### 📖 **Interactive Stories**
-- 50+ engaging stories with beautiful hero images
-- Automatic vocabulary highlighting for learning reinforcement
-- Categorized by reading level (small words/big words)
-- Responsive typography with zoom controls
-- Netflix-style browsing interface
+## Technologies Used
 
-### 🎯 **Smart Flashcards**
-- Practice with 10, 25, 50, or 100 words per session
-- Small words (3-4 letter foundation words) and Big words (complex vocabulary)
-- "Mark for Revisit" feature - flagged words reappear 3-4 cards later
-- Progress tracking with visual indicators
-- Celebratory completion animations
+-   **Frontend**: Next.js, React
+-   **Styling**: Tailwind CSS
+-   **Content**: MDX (Markdown with JSX)
+-   **Scripting**: Python
 
-### 🔤 **Sight Words Management**
-- Comprehensive sight word library
-- Add custom sight words to the collection
-- Words automatically highlighted in stories
-- Separate tracking for small and big word categories
+## Setup
 
-### 🎨 **Modern UI/UX**
-- Beautiful dark theme with gradient accents
-- Glassmorphism design elements
-- Smooth animations and transitions
-- Mobile-responsive layout
-- Accessible navigation
+To set up and run this project locally, follow these steps:
 
-## 🚀 Getting Started
+1.  **Clone the repository**:
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-- Python 3.x (for content generation scripts)
+    ```bash
+    git clone <repository-url>
+    cd storybook
+    ```
 
-### Installation
+2.  **Install Dependencies**:
 
-1. Clone the repository:
-```bash
-git clone https://github.com/crowmcdonald/storybook.git
-cd storybook
-```
+    Navigate into the `app` directory and install the Node.js dependencies:
 
-2. Install dependencies:
-```bash
-cd app
-npm install
-```
+    ```bash
+    cd app
+    npm install
+    cd ..
+    ```
 
-3. Run the development server:
-```bash
-npm run dev
-```
+3.  **Run the Development Server**:
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+    From the root directory, start the Next.js development server:
 
-## 🏗️ Tech Stack
+    ```bash
+    npm run dev
+    ```
 
-- **Framework**: Next.js 15.3 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom components
-- **Content**: MDX for rich story content
-- **UI Components**: Custom components with shadcn/ui patterns
-- **Theme**: next-themes for dark mode
-- **Parsing**: gray-matter for frontmatter, rehype for content processing
-
-## 📁 Project Structure
-
-```
-storybook/
-├── app/              # Next.js application
-│   ├── public/       # Static assets
-│   └── src/          # Source code
-├── python_scripts/   # Python utility scripts
-└── package.json
-```
+    The application will be accessible at `http://localhost:3000` (or another port if 3000 is in use).
 
 ## Content Generation
 
-This project includes several Python scripts in the `python_scripts` directory to help with content creation.
+The Python scripts in the root directory are used to generate content and images for the Next.js application:
 
-### `generate_story_images.py`
-Creates `story_image_prompts.json` with prompts for AI image generation.
+-   `create_blend_images.py`: Generates images related to consonant blends.
+-   `create_blend_mdx_files.py`: Creates MDX files for consonant blend stories.
+-   `create_placeholder_images.py`: Generates generic placeholder images.
+-   `create_themed_placeholders.py`: Creates themed placeholder images.
+-   `generate_single_image.py`: Generates a single image based on a prompt.
+-   `generate_story_images.py`: Generates images for stories based on prompts.
+-   `list_stories.py`: Lists available stories.
 
-### `create_themed_placeholders.py`
-Generates themed placeholder images for stories using the Pillow library. You may need to install it: `pip install Pillow`.
+These scripts typically place generated assets in the `app/public/story-images/` and `app/public/content/` directories.
 
-### `list_stories.py`
-A utility script to list all story titles and their image filenames.
+## Project Structure
 
-## 🛠️ Development
-
-### Adding New Stories
-See `HOW_TO_ADD_STORIES.md` for a detailed guide.
-
-### Customizing Word Lists
-- Edit `app/public/content/small-words.txt`
-- Edit `app/public/content/big-words.txt`
-
-### Running Tests
-```bash
-npm run test
-npm run lint
-npm run type-check
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
-
-- Built with Next.js and the React ecosystem.
-- Inspired by modern educational technology.
-
----
-
-<p align="center">Made with ❤️ for learners everywhere</p>
+-   `/app`: The main Next.js application.
+-   `/app/public`: Static assets, including generated story images and content.
+-   `/app/src`: Source code for the Next.js application.
+-   `/app/src/app`: Next.js app router pages and layouts.
+-   `/app/src/components`: Reusable React components.
+-   `/app/src/lib`: Utility functions and libraries.
+-   `/`: Python scripts for content generation and project-level configuration files.

@@ -25,10 +25,7 @@ export default function FlashcardsPage() {
   const [wordType, setWordType] = useState<WordType>('small');
   const [selectedWordCount, setSelectedWordCount] = useState<number | null>(null);
   const [sessionWords, setSessionWords] = useState<string[]>([]);
-  const [isLoadingWords, setIsLoadingWords] = useState(false);
-
   const loadWords = useCallback(async () => {
-    setIsLoadingWords(true);
     try {
       const smallResponse = await fetch('/content/small-words.txt');
       if (smallResponse.ok) {
@@ -43,8 +40,7 @@ export default function FlashcardsPage() {
     } catch (error) {
       console.error("Failed to load words:", error);
     }
-    setIsLoadingWords(false);
-  }, []);
+    }, []);
 
   useEffect(() => {
     loadWords();

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Flashcard from '@/components/Flashcard';
 import { Button } from '@/components/ui/button';
-import { Blocks, Sparkles, RotateCcw } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { RotateCcw } from 'lucide-react';
+
 
 export interface WordItem {
   word: string;
@@ -91,7 +91,7 @@ export default function FlashcardSession({ words, onSessionComplete }: Flashcard
             Session Complete!
           </h1>
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Fantastic work! You've reviewed <span className="font-semibold text-foreground">{currentWords.length}</span> words.
+            Fantastic work! You&apos;ve reviewed <span className="font-semibold text-foreground">{currentWords.length}</span> words.
             <br />
             Keep up the great learning momentum!
           </p>

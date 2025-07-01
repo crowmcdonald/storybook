@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, startTransition, useRef, useEffect, useMemo } from 'react';
+import React, { useState, startTransition, useEffect } from 'react';
 import { StoryData } from '@/lib/stories';
 import StoryViewer from '@/components/StoryViewer';
 import { Button } from '@/components/ui/button';

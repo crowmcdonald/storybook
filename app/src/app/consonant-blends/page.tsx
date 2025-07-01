@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { getAllStories, StoryData } from '@/lib/stories';
+import { StoryData } from '@/lib/stories';
 import StoryExplorer from '@/components/StoryExplorer';
 import { serialize } from 'next-mdx-remote/serialize';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';

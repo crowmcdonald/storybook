@@ -1,7 +1,7 @@
 import { visit, SKIP } from 'unist-util-visit';
 import { h } from 'hastscript';
-// Types are used inline
 
+// Types are used inline
 interface RehypeHighlightWordsOptions {
   wordsToHighlight: string[];
 }
@@ -23,10 +23,7 @@ export default function rehypeHighlightWords(options: RehypeHighlightWordsOption
 
   // Create a regex that matches any of the words to highlight, case-insensitive, as whole words
   // Escape special characters in wordsToHighlight to prevent regex injection
-  const escapedWords = wordsToHighlight.map(word => word.replace(/[.*+?^${}()|[\\]/g, '\\// Word boundaries \b are important to match whole words only
-  const regex = new RegExp(`\\b(${wordsToHighlight.join('|')})\\b`, 'gi');'));
-  // Create a regex that matches any of the words to highlight, case-insensitive, as whole words
-  // Word boundaries \b are important to match whole words only
+  const escapedWords = wordsToHighlight.map(word => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const regex = new RegExp(`\\b(${escapedWords.join('|')})\\b`, 'gi');
 
   return (tree: HastNode) => {
@@ -62,4 +59,4 @@ export default function rehypeHighlightWords(options: RehypeHighlightWordsOption
       }
     });
   };
-} 
+}

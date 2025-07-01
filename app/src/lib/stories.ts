@@ -32,6 +32,11 @@ export function getAllStorySlugs() {
 }
 
 export async function getStoryData(slug: string): Promise<StoryData | null> {
+  // Sanitize slug to prevent path traversal
+  if (slug.includes('..') || slug.includes('/')) {
+    console.error(`Attempted path traversal with slug: ${slug}`);
+    return null;
+  }
   const fullPath = path.join(storiesDirectory, `${slug}.mdx`);
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -49,7 +54,7 @@ export async function getStoryData(slug: string): Promise<StoryData | null> {
       content, // Raw MDX content
     };
   } catch (error) {
-    console.error(`Error reading story data for ${slug}:`, error);
+    console.error("Error reading story data for %s:", slug, error);
     // If the file doesn't exist or there's a parsing error, return null
     // or handle as appropriate (e.g., by throwing if the story is expected to exist)
     return null;

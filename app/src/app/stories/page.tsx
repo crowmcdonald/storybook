@@ -52,6 +52,11 @@ async function serializeMdxAction(rawMdxContent: string): Promise<MDXRemoteSeria
 
 // Helper function to get stories from a specific directory
 async function getStoriesFromDir(dir: string): Promise<StoryData[]> {
+  // Sanitize dir to prevent path traversal
+  if (dir.includes('..') || dir.includes('/')) {
+    console.error(`Attempted path traversal with dir: ${dir}`);
+    return [];
+  }
   try {
     const storiesPath = path.join(process.cwd(), 'public/content/stories', dir);
     if (!fs.existsSync(storiesPath)) {
@@ -62,6 +67,11 @@ async function getStoriesFromDir(dir: string): Promise<StoryData[]> {
     const stories: StoryData[] = [];
     
     for (const file of files) {
+      // Sanitize file to prevent path traversal
+      if (file.includes('..') || file.includes('/')) {
+        console.warn(`Skipping potentially malicious file: ${file}`);
+        continue;
+      }
       if (file.endsWith('.mdx')) {
         const filePath = path.join(storiesPath, file);
         const content = fs.readFileSync(filePath, 'utf8');
@@ -91,7 +101,7 @@ async function getStoriesFromDir(dir: string): Promise<StoryData[]> {
     
     return stories;
   } catch (error) {
-    console.error(`Failed to load stories from ${dir}:`, error);
+    console.error("Failed to load stories from %s:", dir, error);
     return [];
   }
 }

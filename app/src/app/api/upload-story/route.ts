@@ -35,6 +35,10 @@ export async function POST(request: NextRequest) {
     const imageBytes = await image.arrayBuffer();
     const imageBuffer = Buffer.from(imageBytes);
     const imageExtension = image.name.split('.').pop() || 'jpg';
+    // Sanitize imageExtension to prevent path traversal
+    if (!/^[a-zA-Z0-9]+$/.test(imageExtension)) {
+      throw new Error('Invalid image extension');
+    }
     const imageName = `${storyId}.${imageExtension}`;
     const imagePath = path.join(process.cwd(), 'public/story-images', imageName);
     

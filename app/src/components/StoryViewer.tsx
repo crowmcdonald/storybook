@@ -78,9 +78,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({ title, imagePath, mdxSource, 
   };
   
   // Fix image path - ensure it starts with / for relative paths
-  const normalizedImagePath = imagePath.startsWith('/') || imagePath.startsWith('http') 
-    ? imagePath 
-    : `/story-images/${imagePath}`;
+  const normalizedImagePath = imagePath;
 
   return (
     <div className="min-h-screen p-4 md:p-6">
